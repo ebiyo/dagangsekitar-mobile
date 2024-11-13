@@ -5,7 +5,70 @@ NPM : 2306210115
 Kelas : PBP F
 
 ---
-## Jawaban Pertanyaan Tugas 7
+## Jawaban Pertanyaan Tugas 8
+### > Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
+Const digunakan untuk variabel yang nilainya benar-benar konstan dan harus diketahui saat compile-time. 
+Artinya, variabel yang dideklarasikan dengan const harus memiliki nilai tetap yang tidak tergantung pada kondisi runtime, seperti konstanta matematik atau hal lain yang tidak boleh berubah. Karena hanya dibuat sekali, const sangatlah efisien dalam hal memori, karena Flutter hanya tinggal mengambilnya daripada membuat sebuah objek baru. Hal ini juga dapat mempercepat proses build widget dalam aplikasi.
+
+Kita dapat menggunakan const ketika:
+* Membuat widget statis atau nilai tetap yang tidak akan berubah dalam aplikasi.
+* Menggunakan widget yang sifatnya hanya untuk menampilkan data dan tidak membutuhkan interaksi atau perubahan dinamis.
+* Membuat nilai yang konstan dan diketahui pada saat compile-time, seperti warna, teks, ukuran, atau konstanta lain yang tidak berubah.
+
+Kita sebaiknya tidak menggunakan const ketika:
+* Variabel atau widget memiliki nilai yang dinamis dan dapat berubah selama runtime, seperti yang bergantung pada data API atau input user.
+* Komponen memerlukan kondisi dinamis atau state yang berubah. Contohya widget yang menggunakan StatefulWidget, di mana penggunaan const akan membuatnya tidak bisa berubah.
+
+### > Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+Sesuai namanya, Column dan Row berfungsi untuk mengatur layout secara vertikal (column) dan horizontal (row). Contoh pengimplementasiannya adalah pada penyusunan widget di mana semua widget (InfoCard, teks "Welcome to DagangSekitar", dan tombol-tombol) di atur secara vertikal, tetapi InfoCard NPM, Name, dan Class di atur secara horizontal.
+```
+// Menyusun widget secara vertikal dalam sebuah kolom.
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Row untuk menampilkan 3 InfoCard secara horizontal.
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InfoCard(title: 'NPM', content: npm),
+                    InfoCard(title: 'Name', content: name),
+                    InfoCard(title: 'Class', content: className),
+                  ],
+                ),
+```
+Kita juga dapat menentukan posisi child pada sumbu utama dan sekunder dengan mainAxisAlignment dan crossAxisAlignment.
+#### mainAxisAlignment
+* Column: secara vertikal
+* Row: secara horizontal
+#### crossAxisAlignment
+* Column: secara horizontal
+* Row: secara vertikal
+
+### > Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+Pada tugas kali ini saya menggunakan elemen input TextFormField untuk meminta input nama produk, deskripsi, dan harga. Elemen input Flutter yang tidak saya pakai adalah TextField (karena tidak ada fitur validasi), Checkbox, Radio, Switch, Slider, DropdownButton, DatePicker, TimePicker, RangeSlider, Autocomplete, Stepper. Saya belum menggunakan elemen-elemen input tersebut karena masih belum membutuhkannya. Di tugas ini, saya hanya meminta nama produk, deskripsi, dan harga. Mungkin di tugas-tugas yang akan datang saya akan menggunakan lebih banyak elemen input, misalnya DropdownButton untuk meminta metode pembayaran dan sebagainya.
+
+### > Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+Pada file main.dart, terdapat ThemeData yang digunakan sebagai tema dasar aplikasi.
+```
+theme: ThemeData(
+         colorScheme: ColorScheme.fromSwatch(
+               primarySwatch: Colors.deepPurple,
+         ).copyWith(secondary: Colors.deepPurple[400]),
+        useMaterial3: true,
+      ),
+```
+Data tema ini digunakan agar widget yang menggunakan warna atau gaya default akan otomatis mengikuti tema yang sudah diatur, sehingga menjaga konsistensi tampilan tanpa harus mengatur ulang setiap elemen.
+
+### > Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+Navigasi dapat ditangani dengan Navigator dan Route untuk perpindahan antar layar. Saya menggunakan Navigator.push, Navigator.pushReplacement, dan Navigator.pop untuk mengontrol pergerakan antar halaman pada left_drawer.dart.
+
+* Navigator.push digunakan untuk mendorong halaman baru ke tumpukan (stack) navigasi.
+* Navigator.pop digunakan untuk kembali ke halaman sebelumnya.
+* Navigator.pushReplacement digunakan jika ingin mengganti halaman saat ini tanpa menambahkannya ke tumpukan navigasi, sehingga user tidak dapat kembali ke halaman sebelumnya.
+
+---
+<details>
+<summary>Jawaban Pertanyaan Tugas 7</summary>
 
 ### > Jelaskan apa yang dimaksud dengan stateless widget dan stateful widget, dan jelaskan perbedaan dari keduanya.
 #### Stateless Widget
@@ -59,3 +122,4 @@ Nilai final dapat ditentukan pada saat runtime, yang berarti nilainya bisa berga
 * Menghubungkan repository dengan direktori lokal
 * Membuat app flutter pada direktori lokal
 * Mengikuti tutorial 6, namun menambahkan warna dan logo berbeda pada masing-masing tombol
+</details>
