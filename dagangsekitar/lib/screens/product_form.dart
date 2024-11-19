@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dagangsekitar/widgets/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:dagangsekitar/screens/menu.dart';
+import 'dart:convert';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -16,6 +20,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -134,9 +139,38 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               actions: [
                                 TextButton(
                                   child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    _formKey.currentState!.reset();
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      // Kirim ke Django dan tunggu respons
+                                      // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                                      final response = await request.postJson(
+                                        "http://127.0.0.1:8000/create-flutter/",
+                                        jsonEncode(<String, String>{
+                                            'name': _namaProduk,
+                                            'price': _harga.toString(),
+                                            'description': _deskripsi,
+                                        // TODO: Sesuaikan field data sesuai dengan aplikasimu
+                                        }),
+                                      );
+                                      if (context.mounted) {
+                                        if (response['status'] == 'success') {
+                                          ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content: Text("Mood baru berhasil disimpan!"),
+                                          ));
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                            content:
+                                                Text("Terdapat kesalahan, silakan coba lagi."),
+                                          ));
+                                        }
+                                      }
+                                    }
                                   },
                                 ),
                               ],

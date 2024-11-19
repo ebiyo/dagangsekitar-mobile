@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dagangsekitar/screens/menu.dart';
 import 'package:dagangsekitar/screens/product_form.dart';
+import 'package:dagangsekitar/screens/list_product.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -60,6 +61,18 @@ class LeftDrawer extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => ProductFormPage(),
                 ),
+              );
+            },
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.sell),
+            title: const Text('Daftar Produk'),
+            onTap: () {
+              // Route menu ke halaman mood
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductPage()),
               );
             },
           ),
