@@ -5,7 +5,50 @@ NPM : 2306210115
 Kelas : PBP F
 
 ---
-## Jawaban Pertanyaan Tugas 8
+## Jawaban Pertanyaan Tugas 9
+### > Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+Membuat model untuk pengambilan atau pengiriman data JSON sangat penting untuk memastikan struktur data yang konsisten, validasi secara otomatis, kemudahan memanipulasi data, dan keamanan. Model membantu memproses data JSON menjadi objek terstruktur yang akan menghindari potensi kesalahan parsing, kerentanan keamanan, atau masalah kompatibilitas dengan framework. Tanpa model, developer harus memproses data secara manual yang rentan terhadap kesalahan, sulit di-debug, dan kurang fleksibel jika struktur data berubah. Walaupun tidak selalu menyebabkan error, penggunaan model cukup disarankan untuk efisiensi dan skalabilitas dalam aplikasi yang lebih kompleks.
+
+### > Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini
+Library http digunakan untuk membuat dan mengelola koneksi HTTP, sehingga aplikasi dapat mengirim dan menerima data melalui protokol HTTP. Fungsinya meliputi pengaturan permintaan (request) seperti GET, POST, PUT, dan DELETE, menangani response dari server, dan mendukung fitur seperti header, status code, dan data payload.
+
+### > Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+CookieRequest digunakan untuk mengelola HTTP request dengan mendukung penyimpanan dan pengiriman cookie untuk autentikasi dan menjaga status sesi pengguna. Fungsinya adalah untuk menyimpan data autentikasi, mengelola request dan response, serta menjaga keamanan dan konsistensi data. Instance CookieRequest perlu dibagikan ke semua komponen aplikasi Flutter agar sesi user tetap konsisten di seluruh aplikasi, sehingga menghindari duplikasi, mempermudah akses data autentikasi, dan meningkatkan keamanan dengan memastikan cookie tidak bocor antar sesi.
+
+### > Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+Pengiriman data di Flutter dimulai dari input pengguna melalui widget seperti TextField yang datanya disimpan dalam state atau controller. Data ini dikirim ke server menggunakan permintaan HTTP seperti POST dalam format JSON. Server memproses data, mengembalikan response (biasanya dalam format JSON) yang kemudian di-decode di Flutter menggunakan library seperti jsonDecode atau json_serializable. Data yang diterima diperbarui ke dalam state aplikasi, sehingga UI secara otomatis menampilkan hasilnya sesuai desain.
+
+### > Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+* Register: Flutter mengirim data akun ke Django (POST), Django akan memvalidasi dan simpan ke database.
+* Login: Flutter mengirim data ke Django (POST), Django memverifikasi, lalu kirim token/cookie sesi.
+* State Update: Flutter akan menyimpan token, update state, dan menampilkan menu utama.
+* Logout: Flutter akan menghapus token, mengirim permintaan logout ke Django, dan sesi berakhir.
+
+### > Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+* Membuat django app "authentication" pada proyek Django
+* Menginstall django-cors-headers
+* Membuat method login pada views.py dan menambahkan path ke urls.py
+* Menambahkan path authentication.urls pada urls.py di root
+* Menginstall package provider untuk mengintegrasi sistem autentikasi
+* Memodifikasi root widget untuk menggunakan provider
+* Membuat login.dart pada direktori screens
+* Mengubah home: MyHomePage() menjadi home: const LoginPage() pada main.dart
+* Memodifikasi views.py pada authentication agar fungsi register berfungsi
+* Tambahkan path register pada urls.py di authentication
+* Membuat register.dart pada direktori screens
+* Membuat model yang menyesuaikan data JSON dengan website Quicktype
+* Menambahkan dependensi HTTP dengan menjalankan flutter pub add http
+* Membuat list_product.dari pada screens
+* Menambahkan daftar produk pada left_drawer.dart
+* Membuat method create_product_flutter pada views.py di main dan menambahkan pathnya ke urls.py
+* Menghubungkan product_form.dart dengan CookieRequest
+* Mengubah onPressed: () menjadi async
+* Membuat method logout pada views.py di authentication dan menambahkan path ke urls.py
+* Mengubah perintah onTap: () pada product_card.dart menjadi async
+
+---
+<details>
+<summary>Jawaban Pertanyaan Tugas 8</summary>
 ### > Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
 Const digunakan untuk variabel yang nilainya benar-benar konstan dan harus diketahui saat compile-time. 
 Artinya, variabel yang dideklarasikan dengan const harus memiliki nilai tetap yang tidak tergantung pada kondisi runtime, seperti konstanta matematik atau hal lain yang tidak boleh berubah. Karena hanya dibuat sekali, const sangatlah efisien dalam hal memori, karena Flutter hanya tinggal mengambilnya daripada membuat sebuah objek baru. Hal ini juga dapat mempercepat proses build widget dalam aplikasi.
@@ -65,6 +108,7 @@ Navigasi dapat ditangani dengan Navigator dan Route untuk perpindahan antar laya
 * Navigator.push digunakan untuk mendorong halaman baru ke tumpukan (stack) navigasi.
 * Navigator.pop digunakan untuk kembali ke halaman sebelumnya.
 * Navigator.pushReplacement digunakan jika ingin mengganti halaman saat ini tanpa menambahkannya ke tumpukan navigasi, sehingga user tidak dapat kembali ke halaman sebelumnya.
+</details>
 
 ---
 <details>
